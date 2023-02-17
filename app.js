@@ -16,11 +16,13 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 
 
-
+var posts = [];
 
 app.get("/",function(req,res){
-  res.render("home", {StartingContent : homeStartingContent});
+  res.render("home", {StartingContent : homeStartingContent,posts:posts});
+ 
 });
+
 
 app.get("/about",function(req,res){
   res.render("about", {aboutContent : aboutContent});
@@ -36,12 +38,15 @@ app.get("/compose",function(req,res){
 
 
 app.post("/compose",function(req,res){
-  console.log(req.body.posttitle)
+  const post = {
+    input1: req.body.posttitle,
+    input2: req.body.postbody
+  };
+posts.push(post);
+
+
+res.redirect("/");
 });
-
-
-
-
 
 
 app.listen(3000, function() {
